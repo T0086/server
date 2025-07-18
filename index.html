@@ -133,6 +133,10 @@
   </div>
 
   <script>
+    function truncateTo3(num) {
+      return Math.floor(num * 1000) / 1000;
+    }
+
     const denominations = [100, 50, 20, 10, 5, 2, 1, 0.25, 0.1, 0.05];
     const changeTableBody = document.querySelector('#changeTable tbody');
 
@@ -158,16 +162,16 @@
         const value = parseFloat(row.children[0].textContent);
         const qty = parseFloat(row.children[1].children[0].value) || 0;
         const subtotal = value * qty;
-        row.children[2].textContent = subtotal.toFixed(2);
+        row.children[2].textContent = truncateTo3(subtotal);
         total += subtotal;
       });
-      document.getElementById('changeTotal').textContent = total.toFixed(2);
+      document.getElementById('changeTotal').textContent = truncateTo3(total);
     }
 
     function calculateTips() {
       const totalTips = parseFloat(document.getElementById('totalTips').value) || 0;
       const tips12 = totalTips * 0.12;
-      document.getElementById('tips12').textContent = tips12.toFixed(3);
+      document.getElementById('tips12').textContent = truncateTo3(tips12);
 
       const backNum = parseInt(document.getElementById('backNum').value);
       const backAmount = totalTips * 0.264 / backNum;
@@ -175,7 +179,7 @@
       backTableBody.innerHTML = '';
       for (let i = 1; i <= backNum; i++) {
         const row = document.createElement('tr');
-        row.innerHTML = `<td>后厨${i}</td><td>${backAmount.toFixed(3)}</td>`;
+        row.innerHTML = `<td>后厨${i}</td><td>${truncateTo3(backAmount)}</td>`;
         backTableBody.appendChild(row);
       }
 
@@ -216,7 +220,7 @@
             let [num,den] = ratio.split('/').map(Number);
             total += (totalTips - morningAmount) * 0.616 * (num/den);
           }
-          r.querySelector('.amount').textContent = total.toFixed(3);
+          r.querySelector('.amount').textContent = truncateTo3(total);
         });
       }
       frontTableBody.querySelectorAll('input, select').forEach(el=>{
