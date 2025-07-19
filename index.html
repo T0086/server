@@ -6,6 +6,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>双功能计算器</title>
   <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      overflow-x: hidden;
+      -webkit-overflow-scrolling: touch;
+      scroll-behavior: smooth;
+    }
+    
     body {
       font-family: Arial, sans-serif;
       margin: 20px;
@@ -126,7 +134,7 @@
         <option value="5">5</option>
       </select>
     </label>
-    <table id="frontTable">
+    <div style="overflow-x:auto;"><table id="frontTable">
       <thead>
         <tr>
           <th>前厅</th>
@@ -138,7 +146,7 @@
         </tr>
       </thead>
       <tbody></tbody>
-    </table>
+    </table></div>
 
     <div class="summary">小费分配后总和：<span id="totalDistributed">0</span></div>
   </div>
@@ -150,6 +158,20 @@
 
     const denominations = [100, 50, 20, 10, 5, 2, 1, 0.25, 0.1, 0.05];
     const changeTableBody = document.querySelector('#changeTable tbody');
+
+    
+    // 输入框自动清空0
+    function attachInputZeroHandler() {
+      document.querySelectorAll('input[type="number"]').forEach(input => {
+        input.addEventListener('focus', function() {
+          if (this.value === '0') this.value = '';
+        });
+        input.addEventListener('blur', function() {
+          if (this.value === '') this.value = '0';
+        });
+      });
+    }
+    attachInputZeroHandler();
 
     // 初始化零钱表格
     denominations.forEach(value => {
@@ -292,6 +314,20 @@
       document.querySelectorAll('#frontTable .amount').forEach(cell => sum += parseFloat(cell.textContent) || 0);
       document.getElementById('totalDistributed').textContent = truncateTo3(sum);
     }
+
+    
+    // 输入框自动清空0
+    function attachInputZeroHandler() {
+      document.querySelectorAll('input[type="number"]').forEach(input => {
+        input.addEventListener('focus', function() {
+          if (this.value === '0') this.value = '';
+        });
+        input.addEventListener('blur', function() {
+          if (this.value === '') this.value = '0';
+        });
+      });
+    }
+    attachInputZeroHandler();
 
     // 初始化
     rebuildBackTable();
