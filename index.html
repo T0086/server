@@ -175,6 +175,21 @@
     const denominations = [100, 50, 20, 10, 5, 2, 1, 0.25, 0.1, 0.05];
     const changeTableBody = document.querySelector('#changeTable tbody');
 
+    
+    // 自动删除0逻辑
+    function attachInputZeroHandler() {
+      document.querySelectorAll('input[type="number"]').forEach(input => {
+        input.addEventListener('focus', function() {
+          if (this.value === '0') this.value = '';
+        });
+        input.addEventListener('blur', function() {
+          if (this.value === '') this.value = '0';
+        });
+      });
+    }
+
+    attachInputZeroHandler();
+
     // 初始化零钱表格
     denominations.forEach(value => {
       const row = document.createElement('tr');
@@ -316,6 +331,21 @@
       document.querySelectorAll('#frontTable .amount').forEach(cell => sum += parseFloat(cell.textContent) || 0);
       document.getElementById('totalDistributed').textContent = truncateTo3(sum);
     }
+
+    
+    // 自动删除0逻辑
+    function attachInputZeroHandler() {
+      document.querySelectorAll('input[type="number"]').forEach(input => {
+        input.addEventListener('focus', function() {
+          if (this.value === '0') this.value = '';
+        });
+        input.addEventListener('blur', function() {
+          if (this.value === '') this.value = '0';
+        });
+      });
+    }
+
+    attachInputZeroHandler();
 
     // 初始化
     rebuildBackTable();
